@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VARIABLES</title>
+    <style>
+        :root{
+            --color-primario: gray;
+            --color-secundario: green;
+            
+        }
+        body{
+            box-sizing:border-box;
+            font-family: Arial, Helvetica, sans-serif;
+            /* max-width: 500px; */
+            margin: 0 auto;
+        }
+        .parrafo{
+            color: black;
+            line-height: 1.5;
+        }
+        #par{
+            font-size: 20px;
+        }
+        h1{
+            margin-top: 0;
+        }
+        body:has(input:checked){
+            background-color: var(--color-secundario)
+        }
+        input:checked + div#contenedor{
+            background-color: var(--color-secundario);
+        }
+        div#contenedor{
+            background-color: var(--color-primario);
+            
+        }
+        
+    </style>
+</head>
+<body>
+    <label for="tema" >Tema</label>
+    <input type="checkbox" id="tema" >
+    
+    <div id="contenedor">
+        <h1>Modelo de caja de html</h1>
+    <p id="par" class="parrafo">El modelo de cajas o "box model" es seguramente la característica más importante del lenguaje de hojas de estilos CSS, ya que condiciona el diseño de todas las páginas web. El modelo de cajas es el comportamiento de CSS que hace que todos los elementos de las páginas se representen mediante cajas rectangulares.</p>
+    <p id="par2" class="parrafo"> Estas cajas de una página se crean automáticamente cada vez que se inserta una etiqueta HTML, las cajas no son visibles a simple vista porque inicialmente no muestran ningún color de fondo ni ningún borde. Los navegadores crean y colocan las cajas de forma automática, pero CSS permite modificar todas sus características.</p>
+    </div>
+    
+</body>
+</html>

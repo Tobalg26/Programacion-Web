@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUNCIONES CALC</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .caja{
+            transition: all 0.5s;
+            width: calc((100% / 3) - 30px);
+            height: 100px;
+            background-color: aqua;
+            color: blue;
+            border: 1px solid blue;
+            float: left;
+            margin: 10px;
+            
+        }
+        #caja1:hover{
+            transform: rotate(30deg);
+            
+        }
+        #caja2:hover{
+            transform:skewX(40deg);
+        }
+        #caja3:hover{
+            transform:scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div id="caja1" class="caja">CAJA 1</div>
+        <div id="caja2" class="caja">CAJA 2</div>
+        <div id="caja3" class="caja">CAJA 3</div>
+    </div>
+        
+</body>
+</html>

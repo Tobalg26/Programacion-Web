@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PAR CON FLOAT -->
+    <title>LAYOUTSIDEBAR</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }      
+        .head{
+            border: 2px solid yellow;
+            background-color: aqua;
+            color: blue;           
+            height: 10%;            
+        } 
+        body{
+            width: 100vw;
+            height: 100vh;
+        }
+        .cont{
+            border: 2px solid blue;
+            background-color: aqua;
+            color: blue;
+            float: left;
+            height: 100%;
+        }
+        #sidebar{
+            width: 30%;
+        }
+        #content{
+            width: 70%;
+        }
+    </style>
+</head>
+<body> 
+    <div class="head" id="header">Header</div>
+    <div class="cont" id="sidebar">Sidebar</div>
+    <div class="cont" id="content">Content</div>
+</body>
+</html>

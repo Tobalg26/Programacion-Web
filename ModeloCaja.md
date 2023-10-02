@@ -1,0 +1,25 @@
+# MODELO CAJA / DISPLAY
+## Modelo de caja de html
+El modelo de cajas o "box model" es seguramente la característica más importante del lenguaje de hojas de estilos CSS, ya que condiciona el diseño de todas las páginas web. El modelo de cajas es el comportamiento de CSS que hace que todos los elementos de las páginas se representen mediante cajas rectangulares. Estas cajas de una página se crean automáticamente cada vez que se inserta una etiqueta HTML, las cajas no son visibles a simple vista porque inicialmente no muestran ningún color de fondo ni ningún borde. Los navegadores crean y colocan las cajas de forma automática, pero CSS permite modificar todas sus características. Las partes que componen cada caja y su orden de visualización desde el punto de vista del usuario son las siguientes:  
+
+![Partes que componen cada caja](http://dis.um.es/~lopezquesada/documentos/IES_1213/LMSGI/curso/css/css13/imagenes/esquema.png)  
+-Contenido(content): se trata del contenido HTML del elemento (palabras de un párrafo, una imagen, el texto de una lista de elementos, etc.  
+-Relleno (padding): espacio libre opcional existente entre el contenido y el borde.  
+-Borde (border): línea que encierra completamente el contenido y su relleno.  
+-Imagen de Fondo (background image): imagen que se muestra por detrás del contenido y el espacio de relleno  
+-Color de Fondo (background color): color que se muestra por detrás del contenido y el espacio de relleno.  
+-Margen (margin): separación opcional existente entre la caja y el resto de cajas adyacentes.  
+## Propiedad Display
+La propiedad display en CSS nos ayuda a controlar dónde se va a ver un elemento HTML dentro de la pantalla para estructurar nuestra página web. Esta propiedad se basa en la lógica del modelo de caja en CSS. En resumen, el modelo de caja en CSS dice que cada elemento HTML es realmente un bloque con una serie de características de borde, margen y padding. Cómo se ven estas características en nuestra página web dependerá de la opción de la propiedad display en CSS que elijamos para el elemento.  
+### Display CSS: block  
+El valor block en la propiedad display en CSS representa un elemento como un bloque y es uno de los tipos de display css. Una forma de entender esto es pensar en los bloques como elementos que van de lado a lado de la pantalla, como sería un párrafo. Cuando usamos este valor, el elemento empezará en una nueva línea al lado izquierdo de nuestro viewport y ocupará hacia la derecha, en el eje horizontal, tanto espacio como sea posible. Este bloque seguirá creciendo hacia abajo cuanto sea necesario y siempre intentará ocupar el ancho máximo de su contenedor, que en la mayoría de casos es el mismo viewport (espacio visible de la página web en pantalla).  
+Esto quiere decir que, si tienes, por ejemplo, un párrafo en una pantalla de 800 pixeles de ancho, el párrafo funcionará como un bloque y ocupará 800 pixeles de ancho. Puedes encontrar un pequeño margen entre el bloque y la pantalla, pero esto realmente es el margen del elemento body. Si le das un margen 0 a este elemento, los elementos de bloque ocuparán el total del ancho sin necesidad de especificar su tamaño.  
+### Display CSS: inline  
+El valor inline en la propiedad display en CSS representa elementos que continúan en la misma línea que el resto del contenido y es otro de los tipos de display css. Los elementos inline pueden verse como una letra dentro de la propia línea del flujo del texto en vez de un bloque aparte. Estos elementos no respetan ni márgenes ni paddings top/bottom ni propiedades de width y height. Es decir, si les aplicas un relleno o margen, solo afectarán a los lados del elemento, no su espaciado arriba y abajo. Esto se vería como un gran espacio a la izquierda y derecha del texto que no afecta el alto de la línea, pues su prioridad es mantenerla.  
+### Display: inline-block  
+Hay una opción que está en medio de los dos niveles de propiedad display en css anteriores. El inline-block se comporta igual que un elemento inline, ya que sigue el flujo de la línea del texto a la hora de situarse. Sin embargo, esta variedad se comporta como un elemento block, porque respeta las propiedades de width y height, así como los márgenes y paddings a cualquier lado del bloque.  
+Si quieres que un elemento esté en línea pero siga nuestros requerimientos de margen, relleno, alto y ancho, lo más fácil es cambiar el propiedad display en css del elemento a inline-block. A diferencia de los otros niveles, este no es un nivel por defecto, por lo que debes especificarlo en tu código.  
+### Display: none  
+Esta opción de propiedad display en cs, de los tipos de display css, oculta el elemento sin dejar espacio en el sitio que debería ocupar. Cuando agregues esta opción verás la página web sin ningún rastro del elemento. Esta opción permite crear estados en los que el elemento se oculte o se revele.  
+
+![](https://res.cloudinary.com/practicaldev/image/fetch/s--lT1mgYzG--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/h0y0cf2fj9m16wpv7y2n.jpg) 
