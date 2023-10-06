@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GATO IMAGEN</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .contenedor{
+            display: grid; 
+            height: 100vh;
+            width: 100vw;
+            background-color: white;      
+            grid-template-columns: 125px 125px 125px;
+            grid-template-rows: 125px 125px 125px 125px;
+            justify-content: center;
+            align-content: center;
+            align-items: stretch;     
+            justify-items: stretch;          
+        }   
+        .caja{
+            background-color: aqua;
+            border: 1px solid black;
+            font-size: 40px; 
+            text-align: center;
+            line-height: 2.5em;
+        }
+        .caja:hover{
+            border: 3px solid black;
+        }
+        #caja10{
+            grid-column-start: 1;
+            grid-column-end: 4;
+            align-self: center;
+            justify-self: center;
+        }
+        #btnLim{
+            width: 75px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cont" class="contenedor">
+        <div id="caja1" class="caja"></div>
+        <div id="caja2" class="caja"></div>
+        <div id="caja3" class="caja"></div>
+        <div id="caja4" class="caja"></div>
+        <div id="caja5" class="caja"></div>
+        <div id="caja6" class="caja"></div>
+        <div id="caja7" class="caja"></div>
+        <div id="caja8" class="caja"></div>
+        <div id="caja9" class="caja"></div>
+        <div id="caja10"> <button id="btnLim" type="button" >Limpiar</button> </div>        
+    </div>
+    
+    <script>
+
+        var o='<img src="https://previews.123rf.com/images/lystopad/lystopad1601/lystopad160100110/51073535-letra-o-doble-exposici%C3%B3n-con-el-%C3%A1rbol-blanco-en-el-fondo-del-negro-aislado-n%C3%BAmeros-blancos-doble.jpg" width="120px" height="120px">';
+        var x='<img src="https://previews.123rf.com/images/galastudio/galastudio1504/galastudio150400807/39126007-x-carta-escrita-a-mano-roja-sobre-fondo-blanco-los-colores-acr%C3%ADlicos-ilustraci%C3%B3n-del-vector.jpg" width="120px" height="120px">';
+        var xo=x;
+
+        document.getElementById("cont").addEventListener("click",function(e){        
+            if (document.getElementById(e.target.id).innerHTML==''){
+                if (xo==x){xo=o}else{xo=x}
+            document.getElementById(e.target.id).innerHTML=xo;
+        }
+            
+            
+        });
+
+        document.getElementById("btnLim").addEventListener("click",function(){
+        let cajas=document.getElementsByClassName("caja");
+        for(const elemento of cajas){
+            console.log(elemento);
+            elemento.innerHTML='';   
+        }
+        })
+
+
+
+    </script>
+</body>
+</html>
