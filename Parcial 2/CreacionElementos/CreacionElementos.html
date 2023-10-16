@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreacionElementos
+    </title>
+    </head>
+<body>
+    <div id="contenedor"></div>
+
+    <script>
+        let encabezados=['Nombre','ApellidoP','ApellidoM'];
+        let datos=[{
+            nombre:"Cristobal",
+            apellidop:"Gonzalez",
+            apellidom:"Martinez"
+        },{
+            nombre:"Cristobal",
+            apellidop:"Gonzalez",
+            apellidom:"Martinez"
+        },{
+            nombre:"Cristobal",
+            apellidop:"Gonzalez",
+            apellidom:"Martinez"
+        }];
+        
+        let tab=document.createElement("table");
+        let enc=document.createElement("thead");
+        let fil=document.createElement("tr");
+
+        encabezados.forEach(elemento=>{
+            let th = document.createElement("th");
+            th.innerText=elemento;
+            fil.appendChild(th);
+        });
+
+        enc.appendChild(fil);
+        tab.appendChild(enc);
+        
+        tbody=document.createElement("tbody");
+        datos.forEach(function(elemento){
+            let fila=document.createElement("tr");
+
+            let td1 =document.createElement("td");
+            td1.innerText=elemento.nombre;
+            fila.appendChild(td1);
+
+            let td2=document.createElement("td");
+            td2.innerText=elemento.apellidop;
+            fila.appendChild(td2);
+
+            let td3=document.createElement("td");
+            td3.innerText=elemento.apellidom;
+            fila.appendChild(td3);
+            
+            tbody.appendChild(fila);
+
+        })
+        
+        tab.appendChild(tbody);
+
+        document.getElementById("contenedor").appendChild(tab);
+        
+        var tabla = document.getElementById("contenedor");
+        tabla.style.backgroundColor = "aqua";
+        tabla.style.margin = "10px";
+
+        var celdas= tabla.getElementsByTagName("td");
+        for(var i=0;i<celdas.length;i++){
+            
+            
+            celdas[i].style.border="1px solid black";
+            celdas[i].style.textAlign="center";
+        }
+    </script>
+
+</body>
+</html>
