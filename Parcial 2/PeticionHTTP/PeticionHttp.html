@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peticion HTTP</title>
+    
+</head>
+
+<body>
+    <button id="btnXml">Peticion XmlHttpRequest</button>
+    <button id="btnFetch">Peticion Fetch</button>
+    <button id="btnAsync">Peticion Async</button>
+    <button id="btnJQ">Peticion JQ</button>
+    <button id="btnAX">Peticion AX</button>
+    <div id="chuck"></div>
+
+
+    <script>
+        window.onload=function(){
+
+        document.getElementById("btnXml").addEventListener("click", () => {
+            const data = null;
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === this.DONE) {
+                    console.log(this.responseText);
+
+                    let objetoRespuesta = JSON.parse(this.responseText);
+                    console.log(objetoRespuesta.value);
+                    document.getElementById("chuck").innerText = objetoRespuesta.value;
+                }
+            });
+            xhr.open("GET", "https://api.chucknorris.io/jokes/random");
+            xhr.send(/*data*/);
+        })
+
+
+
+        document.getElementById("btnFetch").addEventListener("click", () => {
+            fetch("https://api.chucknorris.io/jokes/random")
+                .then(objRespuesta => objRespuesta.json())
+                .then(datoJson => document.getElementById("chuck").innerText = datoJson.value);
+        })
+
+
+
+        document.getElementById("btnAsync").addEventListener("click", async () => {
+            let objRespuesta = await fetch("https://api.chucknorris.io/jokes/random");
+            let datoJson = await objRespuesta.json();
+            document.getElementById("chuck").innerText = datoJson.value
+        })
+
+
+
+        document.getElementById("btnAX").addEventListener("click", async () => {
+            axios({
+                method:'get',
+                url:'https://api.chucknorris.io/jokes/random',
+                responseType:'json'
+            })
+            .then(function(datoJson){
+                document.getElementById("chuck").innerText = datoJson.value
+            })
+        })
+    }
+
+        document.getElementById("btnJQ").addEventListener("click", () => {
+            $.getJSON("https://api.chucknorris.io/jokes/random", function (datoJson) {
+                console.getElementById("chuck").innerText=datoJson.value
+            });
+        })
+
+
+    </script>
+
+</body>
+
+</html>
