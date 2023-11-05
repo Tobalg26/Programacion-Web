@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peticion HTTP</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        #peticion {
+            background-color: yellow;
+            text-align: center;
+            height: 20vh;
+            font-size: 50px;
+            padding-top: 20px;
+            font-family: cursive;
+        }
+        #contEmoji {
+            height: 60vh;
+            background-color: aqua;
+            padding-left: 25vw;
+            padding-right: 25vw;
+            padding-top: 2.5vh;
+            padding-bottom: 2.5vh;
+            text-align: center;
+        }
+        #contBotones {
+            height: 20vh;
+            background-color: yellow;
+        }
+        button {
+            font-size: 24px;
+            margin: 30px;
+            border: 2px black solid;
+            background-color: white;
+            font-family: cursive;
+        }
+        #respuesta {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            font-size: 7em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.1em auto;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div id="peticion">Peticion Http Emoji</div>
+    <div id="contEmoji">
+        <div id="respuesta"></div>
+    </div>
+    
+        <div id="contBotones">
+            <button id="btnPeticionAjax">Petición AJAX</button>
+            <button id="btnPeticionFetch">Petición Fetch</button>
+            <button id="btnPeticionAsync">Petición Async-Await</button>
+            <button id="btnPeticionJQuery">Petición JQuery</button>
+            <button id="btnPeticionAxios">Petición AXIOS</button>
+        </div>
+        
+
+    <script>
+        // Contenedor para mostrar el emoji recuperado de la petición
+        let contenedor = document.getElementById("respuesta");
+
+        // Button para la petición usando ajax  
+        document.getElementById("btnPeticionAjax").addEventListener("click", () => {
+            const data = null;
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === this.DONE) {
+
+                    let response = JSON.parse(this.response);
+
+                    contenedor.innerHTML = response["htmlCode"][0];
+                }
+            });
+
+            xhr.open("GET", "https://emojihub.yurace.pro/api/random");
+
+            xhr.send(data);
+        });
+
+        // Button para la petición usando fetch
+        document.getElementById("btnPeticionFetch").addEventListener("click", () => {
+            fetch("https://emojihub.yurace.pro/api/random")
+                .then(response => response.json())
+                .then(datosJson => contenedor.innerHTML = datosJson["htmlCode"][0]);
+        });
+
+        //Button para la petición usando async y await
+        document.getElementById("btnPeticionAsync").addEventListener("click", async () => {
+            let objRespuesta = await fetch("https://emojihub.yurace.pro/api/random");
+            let datosJson = await objRespuesta.json();
+            contenedor.innerHTML = datosJson["htmlCode"][0];
+        });
+
+        // Button para la petición usando jquery
+        document.getElementById("btnPeticionJQuery").addEventListener("click", () => {
+            $.getJSON("https://emojihub.yurace.pro/api/random", function (datosJson) {
+                contenedor.innerHTML = datosJson["htmlCode"][0];
+            });
+        });
+
+        // Button para la petición usando axios
+        document.getElementById("btnPeticionAxios").addEventListener("click", async () => {
+            axios({
+                method: 'get',
+                url: "https://emojihub.yurace.pro/api/random",
+                responseType: 'json'
+            })
+                .then(function (datosJson) {
+                    contenedor.innerHTML = datosJson.data["htmlCode"][0];
+                });
+        });
+    </script>
+</body>
+
+</html>
