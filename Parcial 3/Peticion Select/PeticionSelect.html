@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peticion / Select</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            background-color: wheat;
+        }
+
+        #chuck {
+            height: 40vh;
+            margin: 20px;
+            background-color: white;
+            border: 2px dashed black;
+            font-size: 25px;
+            text-align: center;
+            padding-top: 5dvh;
+            padding-left: 10dvw;
+            padding-right: 10dvw;
+        }
+        #btnPeticion {
+            display: block;
+            background-color: white;
+            border: 1px solid black;
+            font-size: 20px;
+            margin: 0 auto;
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+        #btnPeticion:hover{
+            border: 2px dashed black;
+            font-size: 22px;
+        }
+        #CategoriasChuck{
+            display: block;
+            background-color: white;
+            border: 1px solid black;
+            font-size: 20px;
+            margin: 0 auto;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        #CategoriasChuck:hover{
+            border: 2px dashed black;
+            font-size: 22px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div id="chuck">Chuck</div>
+    <button id="btnPeticion">Peticion</button>
+    <select id="CategoriasChuck"></select>
+
+    <script>
+        var catChuck;
+        window.onload = function () {
+            fetch("https://api.chucknorris.io/jokes/categories")
+                .then(respuesta => respuesta.json())
+                .then(function (dato) {
+                    console.log(dato)
+
+                    dato.forEach(elemento => {
+                        console.log(elemento);
+                        let opcion = document.createElement("option")
+                        opcion.value = elemento;
+                        opcion.innerText = elemento;
+                        document.getElementById("CategoriasChuck").appendChild(opcion);
+                    });
+                });
+
+
+            document.getElementById("btnPeticion").addEventListener("click", () => {
+                catChuck = document.getElementById("CategoriasChuck").value;
+                console.log(catChuck);
+                const data = null;
+                const xhr = new XMLHttpRequest();
+                xhr.addEventListener("readystatechange", function () {
+                    if (this.readyState === this.DONE) {
+                        console.log(this.responseText);
+
+                        let objetoRespuesta = JSON.parse(this.responseText);
+                        console.log(objetoRespuesta.value);
+                        document.getElementById("chuck").innerText = objetoRespuesta.value;
+
+                    }
+                });
+                xhr.open("GET", "https://api.chucknorris.io/jokes/random?category=" + catChuck);
+                xhr.send(/*data*/);
+            })
+        }
+    </script>
+</body>
+
+</html>
