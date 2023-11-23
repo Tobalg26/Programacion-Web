@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid JS</title>
+    <link
+      href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <div id="tabla"></div>
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script>
+        new gridjs.Grid({
+            search: true,
+            columns: ['CLIENTE_ID','NOMBRE','EMAIL','FECHA_REGISTRO'],
+            server: {
+                url: 'http://localhost:8082',
+                then: data => data.map(usuario => 
+                    [usuario.CLIENTE_ID, usuario.NOMBRE, usuario.EMAIL, usuario.FECHA_REGISTRO]
+                )
+                } 
+        }).render(document.getElementById("tabla"));
+    </script>
+</body>
+</html>
