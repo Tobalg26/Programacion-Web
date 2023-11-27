@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Clientes</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            margin-left: 5px;
+            font-size: 17px;
+        }
+
+        input {
+            font-size: 17px;
+            margin-top: 10px;
+        }
+
+        button {
+            font-size: 17px;
+            margin-left: 25px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Clientes</h1>
+    <form id="Formulario">
+        <label for="Cliente_ID">Cliente_ID:</label>
+        <input type="text" id="Cliente_ID" name="Cliente_ID">
+
+        <label for="Nombre">Nombre:</label>
+        <input type="text" id="Nombre" name="Nombre"><br>
+
+        <label for="Email">Email:</label>
+        <input type="text" id="Email" name="Email">
+
+        <label for="Fecha_Registro">Fecha_Registro:</label>
+        <input type="text" id="Fecha_Registro" name="Fecha_Registro"><br>
+
+        <button type="button" id="btn_buscar">Buscar</button>
+        <button type="button" id="btn_insertar">Insertar</button>
+        <button type="button" id="btn_modificar">Modificar</button>
+        <button type="button" id="btn_eliminar">Eliminar</button>
+
+    </form>
+    <script>
+        document.getElementById("btn_buscar").addEventListener("click", async () => {
+
+            let id = prompt("Id del Usuario");
+
+            let response = await fetch("http://localhost:8082?Cliente_ID=" + id, { method: "GET" });
+            let data = await response.text();
+            console.log(data);
+        })
+
+        document.getElementById("btn_eliminar").addEventListener("click", async () => {
+            let id = prompt("Id del Usuario");
+            if (id == null) {
+                throw new Error('Prompt vacio')
+            }
+            let response = await fetch("http://localhost:8082?Cliente_ID=" + id, { method: "DELETE" });
+            let data = await response.text();
+            console.log(data);
+
+        })
+
+        document.getElementById("btn_insertar").addEventListener("click", async () => {
+            let datos = new FormData();
+            datos.append('Cliente_ID', document.getElementById("Cliente_ID").value)
+            datos.append('Nombre', document.getElementById("Nombre").value)
+            datos.append('Email', document.getElementById("Email").value)
+            datos.append('Fecha_Registro', document.getElementById("Fecha_Registro").value)
+
+            console.log(datos.get('Cliente_ID'))
+            console.log(datos.get('Nombre'))
+            console.log(datos.get('Email'))
+            console.log(datos.get('Fecha_Registro'))
+
+
+            let response = await fetch("http://localhost:8082",
+                {
+                    method: "POST",
+                    body: datos
+                });
+            let data = await response.text();
+            console.log(data);
+        })
+
+    </script>
+</body>
+
+</html>
