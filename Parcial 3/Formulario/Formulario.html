@@ -11,22 +11,26 @@
             margin: 0;
             padding: 0;
             font-family: Arial, Helvetica, sans-serif;
+            background-color: wheat;
         }
 
         h1 {
             text-align: center;
             margin-top: 10px;
             margin-bottom: 10px;
+
         }
 
         label {
             margin-left: 5px;
             font-size: 17px;
+
         }
 
         input {
             font-size: 17px;
             margin-top: 10px;
+            background-color: white;
         }
 
         button {
@@ -34,7 +38,11 @@
             margin-left: 25px;
             margin-top: 15px;
             margin-bottom: 15px;
-
+            background-color: white;
+        }
+        button:hover {
+            font-size: 18px;
+            border: 2px solid black;
         }
     </style>
 </head>
@@ -58,12 +66,14 @@
         <button type="button" id="btn_insertar">Insertar</button>
         <button type="button" id="btn_modificar">Modificar</button>
         <button type="button" id="btn_eliminar">Eliminar</button>
+        <button type="button" id="btn_pdf">Generar PDF</button>
 
     </form>
     <script>
+        
         document.getElementById("btn_buscar").addEventListener("click", async () => {
-
-            let id = prompt("Id del Usuario");
+            
+            let id = document.getElementById("Cliente_ID").value
 
             let response = await fetch("http://localhost:8082?Cliente_ID=" + id, { method: "GET" });
             let data = await response.text();
@@ -71,10 +81,7 @@
         })
 
         document.getElementById("btn_eliminar").addEventListener("click", async () => {
-            let id = prompt("Id del Usuario");
-            if (id == null) {
-                throw new Error('Prompt vacio')
-            }
+            let id = document.getElementById("Cliente_ID").value
             let response = await fetch("http://localhost:8082?Cliente_ID=" + id, { method: "DELETE" });
             let data = await response.text();
             console.log(data);
@@ -93,7 +100,6 @@
             console.log(datos.get('Email'))
             console.log(datos.get('Fecha_Registro'))
 
-
             let response = await fetch("http://localhost:8082",
                 {
                     method: "POST",
@@ -102,6 +108,37 @@
             let data = await response.text();
             console.log(data);
         })
+
+        document.getElementById("btn_modificar").addEventListener("click", async () => {
+            let datos = new FormData();
+            datos.append('Cliente_ID', document.getElementById("Cliente_ID").value)
+            datos.append('Nombre', document.getElementById("Nombre").value)
+            datos.append('Email', document.getElementById("Email").value)
+            datos.append('Fecha_Registro', document.getElementById("Fecha_Registro").value)
+
+            console.log(datos.get('Cliente_ID'))
+            console.log(datos.get('Nombre'))
+            console.log(datos.get('Email'))
+            console.log(datos.get('Fecha_Registro'))
+
+            let response = await fetch("http://localhost:8082",
+                {
+                    method: "PUT",
+                    body: datos
+                });
+            let data = await response.text();
+            
+            console.log(data);
+        })
+
+        document.getElementById("btn_pdf").addEventListener("click", async () => {
+            let response = await fetch("http://localhost:8082/usuarios/formato",{method: "GET",});
+            let data = await response.blob();
+            let archivoPDF=URL.createObjectURL(data);
+            window.open(archivoPDF);
+        })
+
+
 
     </script>
 </body>
