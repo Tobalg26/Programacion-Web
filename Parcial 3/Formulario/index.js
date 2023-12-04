@@ -3,7 +3,7 @@ const cors = require('cors')
 const mysql2 = require('mysql2')
 const app = express();
 const { jsPDF } = require('jspdf');
-const path =require('path');
+const path = require('path');
 
 const multer = require('multer');
 const upload = multer();
@@ -27,13 +27,33 @@ connection.connect(function (error) {
     }
 })
 
-app.get('/usuarios/formato', (req, res) => {
+app.get('/clientes2', (req, res) => {
+    let consulta = 'select * FROM clientes2'
+    console.log(consulta);
+    connection.query(
+        consulta,
+        function (err, results, fields) {
+            if (err != null) {
+                res.json({ Mensaje: err.message });
+            }
+            else {
+                res.json(results);
+            }
+        }
+    );
+});
+
+app.post('/usuarios/formato',upload.none(), (req, res) => {
     const doc = new jsPDF();
-    doc.text("Hello World", 10, 10);
-    let archivoPDF=path.join(__dirname,'a4.pdf')
+    doc.text(`CLIENTE:`, 10, 10);
+    doc.text(`Cliente ID: ${req.body.Cliente_ID}`, 10, 20);
+    doc.text(`Nombre: ${req.body.Nombre}`, 10, 30);
+    doc.text(`Email: ${req.body.Email}`, 10, 40);
+    doc.text(`Fecha_Registro: ${req.body.Fecha_Registro}`, 10, 50);
+    let archivoPDF = path.join(__dirname, 'a4.pdf')
     doc.save(archivoPDF);
     res.sendFile(archivoPDF);
-    
+
 })
 
 
@@ -49,7 +69,7 @@ app.get('/', (req, res) => {
         consulta,
         function (err, results, fields) {
             if (err != null) {
-                res.json(err);
+                res.json({ Mensaje: err.message });
             }
             else {
                 res.json(results);
@@ -66,7 +86,7 @@ app.post('/', upload.none(), (req, res) => {
         consulta,
         function (err, results, fields) {
             if (err != null) {
-                res.json(err);
+                res.json({ Mensaje: err.message });
             }
             else {
                 res.json(results);
@@ -84,7 +104,7 @@ app.delete('/', (req, res) => {
         consulta,
         function (err, results, fields) {
             if (err != null) {
-                res.json(err);
+                res.json({ Mensaje: err.message });
             }
             else {
                 res.json(results);

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD Clientes</title>
@@ -40,6 +41,7 @@
             margin-bottom: 15px;
             background-color: white;
         }
+
         button:hover {
             font-size: 18px;
             border: 2px solid black;
@@ -67,17 +69,28 @@
         <button type="button" id="btn_modificar">Modificar</button>
         <button type="button" id="btn_eliminar">Eliminar</button>
         <button type="button" id="btn_pdf">Generar PDF</button>
+        <button type="button" id="btn_limpiar">Limpiar</button>
 
     </form>
     <script>
-        
+
         document.getElementById("btn_buscar").addEventListener("click", async () => {
-            
+
             let id = document.getElementById("Cliente_ID").value
 
             let response = await fetch("http://localhost:8082?Cliente_ID=" + id, { method: "GET" });
-            let data = await response.text();
+
+            // let data = await response.text();
+            let data = await response.json();
             console.log(data);
+
+            if (id != '') {
+                document.getElementById("Nombre").value = data[0].NOMBRE;
+                document.getElementById("Email").value = data[0].EMAIL;
+                document.getElementById("Fecha_Registro").value = data[0].FECHA_REGISTRO.substring(0, 10);
+            }
+
+
         })
 
         document.getElementById("btn_eliminar").addEventListener("click", async () => {
@@ -85,6 +98,8 @@
             let response = await fetch("http://localhost:8082?Cliente_ID=" + id, { method: "DELETE" });
             let data = await response.text();
             console.log(data);
+            ActualizarRegistros();
+
 
         })
 
@@ -107,6 +122,8 @@
                 });
             let data = await response.text();
             console.log(data);
+            ActualizarRegistros();
+
         })
 
         document.getElementById("btn_modificar").addEventListener("click", async () => {
@@ -127,20 +144,62 @@
                     body: datos
                 });
             let data = await response.text();
-            
+
             console.log(data);
+            ActualizarRegistros();
         })
 
         document.getElementById("btn_pdf").addEventListener("click", async () => {
-            let response = await fetch("http://localhost:8082/usuarios/formato",{method: "GET",});
+            let datos = new FormData();
+            datos.append('Cliente_ID', document.getElementById("Cliente_ID").value)
+            datos.append('Nombre', document.getElementById("Nombre").value)
+            datos.append('Email', document.getElementById("Email").value)
+            datos.append('Fecha_Registro', document.getElementById("Fecha_Registro").value)
+            let response = await fetch("http://localhost:8082/usuarios/formato",
+                {
+                    method: "POST",
+                    body: datos
+                });
             let data = await response.blob();
-            let archivoPDF=URL.createObjectURL(data);
+            let archivoPDF = URL.createObjectURL(data);
             window.open(archivoPDF);
         })
 
+        document.getElementById("btn_limpiar").addEventListener("click", function () {
+            document.getElementById("Cliente_ID").value = '';
+            document.getElementById("Nombre").value = '';
+            document.getElementById("Email").value = '';
+            document.getElementById("Fecha_Registro").value = '';
+        });
+    </script>
 
+
+
+    <div id="tabla"></div>
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script>
+        let table = new gridjs.Grid({
+            columns: ['CLIENTE_ID', 'NOMBRE', 'EMAIL', 'FECHA_REGISTRO'],
+            server: {
+                url: 'http://localhost:8082/clientes2',
+                then: data => data.map(usuario =>
+                    [usuario.CLIENTE_ID, usuario.NOMBRE, usuario.EMAIL, usuario.FECHA_REGISTRO]
+                )
+            }
+        }).render(document.getElementById("tabla"));
+
+        function ActualizarRegistros() {
+            table.updateConfig({
+                server: {
+                    url: 'http://localhost:8082/clientes2',
+                    then: data => data.map(usuario =>
+                        [usuario.CLIENTE_ID, usuario.NOMBRE, usuario.EMAIL, usuario.FECHA_REGISTRO])
+                }
+            }).forceRender();
+        }
 
     </script>
+
 </body>
 
 </html>
